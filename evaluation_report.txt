@@ -1,0 +1,112 @@
+Project 02 — Fine-Tuning Using Different Architectures
+======================================================
+
+**Author:** Ayesha Ali  
+**Framework:** Hugging Face Transformers + TensorFlow  
+**GPU Environment:** Google Colab (T4 GPU)
+
+---
+
+## 🧠 Task 1: Encoder Model (BERT) — Emotion Detection from Text
+In this task, a **BERT-Base (cased)** encoder model was fine-tuned to perform multi-class emotion detection from text.
+
+**Dataset:** Kaggle – Emotion Categories (Neutral, Joy, Sadness, Anger)  
+Split: Train (17,640) | Validation (2,205) | Test (2,205)
+
+**Preprocessing & Tokenization:**
+- BERT tokenizer (`max_length=128`, truncation, padding)
+- Converted to TensorFlow datasets for GPU fine-tuning
+
+**Training:**
+- Optimizer: Adam (lr = 5e-5)
+- Loss: Sparse Categorical Cross-Entropy
+- Epochs: 3  
+- Accuracy: 58% → 75% (train), 65% (val)
+
+**Evaluation:**
+- Test Accuracy: 0.611  
+- Macro F1-score: 0.615  
+- Weighted F1-score: 0.617  
+- Test Loss: 0.974  
+
+**Observations:**
+Best performance on *Joy* and *Anger* (F1 ≈ 0.75–0.77); mild confusion between *Sadness* and *Neutral*.
+
+✅ Deliverables:
+- Preprocessing & tokenization script  
+- Training & validation pipeline  
+- Evaluation metrics (Accuracy, F1, Confusion Matrix)  
+- Example predictions  
+**Status:** ✅ Task 1 Complete
+
+---
+
+## 🍳 Task 2: Decoder Model (GPT-2) — Recipe Generation
+**Objective:** Fine-tune GPT-2 to generate complete cooking recipes from titles and ingredient lists.
+
+**Dataset:** [3A2M Extended Recipe Dataset (Kaggle)](https://www.kaggle.com/datasets/nazmussakibrupol/3a2mext/data)
+
+**Preprocessing:**
+Merged *title*, *ingredients*, and *directions* into single text blocks.  
+Tokenizer: GPT-2 tokenizer (EOS token used as padding).
+
+**Training:**
+- Epochs: 3  
+- Learning rate: 5e-5  
+- Training loss ≈ 2.02  
+- Validation loss ≈ 1.96  
+
+**Evaluation:**
+- ROUGE-1 = 0.24  
+- ROUGE-2 = 0.04  
+- ROUGE-L = 0.14  
+- BLEU = 0.013  
+
+**Observations:**
+Generated recipes are coherent and ingredient-relevant. Some variation expected since recipe generation allows multiple correct outputs.
+
+**Deliverables:**
+- Tokenization & dataset formatting script  
+- Training loop for GPT-2  
+- Evaluation with ROUGE & BLEU  
+- Gradio web app for interactive recipe generation  
+**Status:** ✅ Task 2 Complete
+
+---
+
+## 📰 Task 3: Encoder–Decoder Model (T5) — Text Summarization
+**Objective:** Fine-tune a T5 model for abstractive summarization of news articles from CNN/DailyMail dataset.
+
+**Dataset Stats:** Train = 3521 | Validation = 319 | Test = 287  
+**Model:** T5-small (3 epochs, lr = 5e-5, batch size = 2)
+
+**Evaluation:**
+| Metric | Score |
+|:--|:--|
+| ROUGE-1 | 10.63 |
+| ROUGE-2 | 1.83 |
+| ROUGE-L | 9.48 |
+| Eval Loss | 3.40 |
+
+**Observations:**
+Model learned concise summarization; small dataset limited performance.  
+Best results achieved with beam search and controlled length penalty.
+
+**Future Improvements:**
+- Train longer or with T5-base  
+- Increase `num_beams` and apply `length_penalty`  
+- Expand/clean dataset
+
+**Status:** ✅ Task 3 Complete
+
+---
+
+## ✅ Summary
+All three architectures were fine-tuned successfully:
+| Task | Model Type | Framework | Metric | Score |
+|------|--------------|------------|---------|--------|
+| 1 | Encoder (BERT) | TensorFlow | F1 | 0.615 |
+| 2 | Decoder (GPT-2) | PyTorch | BLEU | 0.013 |
+| 3 | Encoder-Decoder (T5) | TensorFlow | ROUGE-L | 9.48 |
+
+Each task demonstrates understanding of NLP architecture types and practical fine-tuning using the Hugging Face ecosystem.

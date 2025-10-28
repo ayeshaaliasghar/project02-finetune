@@ -1,0 +1,12 @@
+transformers==4.46.0
+datasets==3.0.0
+evaluate==0.4.6
+tensorflow==2.17.0
+torch
+pandas
+numpy
+scikit-learn
+matplotlib
+gradio
+streamlit
+huggingface-hub
